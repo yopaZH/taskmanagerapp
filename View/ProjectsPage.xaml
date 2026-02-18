@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManagerApp.View.ProjectsPage"
+             Title="Проекты">
+
+    <Grid RowDefinitions="*,Auto" Padding="10">
+        
+        <CollectionView ItemsSource="{Binding Projects}"
+                        SelectionMode="Single"
+                        SelectionChangedCommand="{Binding SelectProjectCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, Source={RelativeSource Self}}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="15" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <Label Text="{Binding Name}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               Grid.Row="0"
+                               Grid.Column="0"/>
+                        
+                        <Label Text="{Binding ., StringFormat='Выполнено: {0.CompletedTaskCount}/{0.TotalTaskCount}'}"
+                               FontSize="14"
+                               Grid.Row="1"
+                               Grid.Column="0"
+                               TextColor="#666666"/>
+
+                        <Button Text="✕ Удалить"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteProjectCommand}"
+                                CommandParameter="{Binding .}"
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                Padding="10"
+                                FontSize="12"
+                                BackgroundColor="#FF5252"
+                                TextColor="White"
+                                CornerRadius="5"/>
+
+                        <BoxView Color="#E0E0E0"
+                                 Grid.Row="2"
+                                 Grid.ColumnSpan="2"
+                                 HeightRequest="1"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button Text="+ Создать проект"
+                Command="{Binding AddProjectCommand}"
+                Grid.Row="1"
+                Padding="15"
+                Margin="5"
+                FontSize="16"
+                FontAttributes="Bold"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                CornerRadius="8"/>
+
+    </Grid>
+
+</ContentPage>

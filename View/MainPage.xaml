@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TaskManagerApp.View.MainPage"
+             Title="Управление задачами">
+
+    <VerticalStackLayout Padding="20" Spacing="20" VerticalOptions="Center" HorizontalOptions="Center">
+        
+        <Label Text="📋 Менеджер задач"
+               FontSize="32"
+               FontAttributes="Bold"
+               HorizontalTextAlignment="Center"
+               TextColor="#2196F3"/>
+
+        <Label Text="Планируйте и управляйте своими задачами легко"
+               FontSize="18"
+               HorizontalTextAlignment="Center"
+               TextColor="#666666"/>
+
+        <Button Text="Перейти к проектам"
+                Command="{Binding NavigateToProjectsCommand}"
+                Padding="20,15"
+                FontSize="16"
+                CornerRadius="8"
+                BackgroundColor="#2196F3"
+                TextColor="White"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>
