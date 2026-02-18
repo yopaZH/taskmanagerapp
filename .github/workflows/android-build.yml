@@ -44,9 +44,6 @@ jobs:
         run: |
           echo "=== Installed Workloads (after) ==="
           dotnet workload list
-          echo ""
-          echo "=== Checking SDK resolution ==="
-          dotnet sdk list
 
       - name: Clean previous builds
         run: |
