@@ -23,38 +23,44 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: List installed workloads
+        run: dotnet workload list
+
       - name: Install MAUI workloads
         run: |
-          dotnet workload restore
-          dotnet workload install maui --skip-sign-check
-          dotnet workload install maui-android --skip-sign-check
-        continue-on-error: true
+          dotnet workload install maui-android
+
+      - name: Verify workloads
+        run: dotnet workload list
 
       - name: Restore NuGet packages
-        run: dotnet restore TaskManagerApp.csproj
+        run: dotnet restore
 
       - name: Build Android APK
+        timeout-minutes: 60
         run: |
-          dotnet publish TaskManagerApp.csproj `
+          dotnet publish `
             -f net8.0-android `
             -c Release `
             -p:AndroidPackageFormat=apk `
-            -p:AndroidKeyStore=false `
-            /v:minimal
+            -p:AndroidKeyStore=false
 
       - name: Find APK files
+        if: always()
         shell: bash
         run: |
           echo "=== Looking for APK files ==="
-          find . -name "*.apk" -type f
+          find . -name "*.apk" -type f 2>/dev/null || echo "No APK files found"
+          echo ""
+          echo "=== Directory structure ==="
+          ls -la bin/Release/net8.0-android/ 2>/dev/null || echo "net8.0-android directory not found"
 
       - name: Upload APK artifact
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: android-apk-release
-          path: |
-            **/bin/Release/**/net8.0-android/*.apk
-            **/bin/Release/**/android/**/*.apk
+          path: bin/Release/net8.0-android/*.apk
           retention-days: 7
           if-no-files-found: warn
 
