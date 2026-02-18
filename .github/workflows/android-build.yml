@@ -53,18 +53,14 @@ jobs:
           if (Test-Path bin) { Remove-Item -Recurse -Force bin }
           if (Test-Path obj) { Remove-Item -Recurse -Force obj }
 
-      - name: Restore NuGet packages
-        run: dotnet restore TaskManagerApp.csproj -v minimal
-
-      - name: Build Android APK (Release)
+      - name: Build Android APK (Release) - with automatic restore
         timeout-minutes: 90
         run: |
-          dotnet publish TaskManagerApp.csproj `
+          dotnet publish `
             -f net8.0-android `
             -c Release `
             -p:AndroidPackageFormat=apk `
-            -p:AndroidKeyStore=false `
-            -p:TargetFramework=net8.0-android
+            -p:AndroidKeyStore=false
 
       - name: Find APK files
         if: always()
