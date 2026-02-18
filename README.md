@@ -161,20 +161,31 @@ public class BaseViewModel : INotifyPropertyChanged {
 
 ### Компиляция
 ```bash
-cd /home/styopa/Documents/uni/рпп/TaskManagerApp
+# Перейти в папку проекта
+cd TaskManagerApp
 
-# Restore dependencies
+# Восстановить зависимости
 dotnet restore
 
-# Build project
+# Собрать проект
 dotnet build
 
-# Run on Android emulator
+# Запустить на Android эмуляторе
 dotnet run -f net8.0-android
 
-# Run on iOS simulator
+# Запустить на iOS симуляторе  
 dotnet run -f net8.0-ios
 ```
+
+---
+
+## 🏗️ Сборка APK для Android
+
+Для сборки APK файла на Windows:
+1. Используйте подробную инструкцию в файле **WINDOWS_BUILD_GUIDE.md**
+2. Требуется Windows машина с установкой .NET SDK, Java JDK и Android SDK
+3. Команда для сборки: `dotnet publish -f net8.0-android -c Release`
+4. APK файл будет в папке `bin/Release/net8.0-android/`
 
 ---
 
